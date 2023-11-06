@@ -17,6 +17,10 @@ public extension PanModalPresentable where Self: UIViewController {
         return topLayoutOffset + 21.0
     }
 
+    var addBottomSafeAreaForContentSize: Bool {
+        return false
+    }
+
     var shortFormHeight: PanModalHeight {
         return longFormHeight
     }

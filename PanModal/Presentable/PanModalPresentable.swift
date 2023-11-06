@@ -36,6 +36,14 @@ public protocol PanModalPresentable: AnyObject {
     var topOffset: CGFloat { get }
 
     /**
+     For some swift ui views, when using intric size configuration, the bottom safe area is not added automatically.
+     This flag allows us to optionally add this offset in the content size.
+
+     Default value is false
+     */
+    var addBottomSafeAreaForContentSize: Bool { get }
+
+    /**
      The height of the pan modal container view
      when in the shortForm presentation state.
 

@@ -382,7 +382,15 @@ private extension PanModalPresentationController {
             presentedView.frame.origin.y = max(yPosition, anchoredYPosition)
         }
         panContainerView.frame.origin.x = frame.origin.x
-        presentedViewController.view.frame = CGRect(origin: .zero, size: adjustedSize)
+        presentedViewController.view.frame = CGRect(
+            origin: .zero,
+            size: .init(
+                width: adjustedSize.width,
+                height: adjustedSize.height + (
+                    presentable?.addBottomSafeAreaForContentSize == true ? edgeInset.bottom : 0.0
+                )
+            )
+        )
     }
 
     /**
@@ -458,15 +466,13 @@ private extension PanModalPresentationController {
          Set the appropriate contentInset as the configuration within this class
          offsets it
          */
-        scrollView.contentInset.bottom = presentingViewController.bottomLayoutGuide.length
+        scrollView.contentInset.bottom = edgeInset.bottom
 
         /**
          As we adjust the bounds during `handleScrollViewTopBounce`
          we should assume that contentInsetAdjustmentBehavior will not be correct
          */
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .never
-        }
+        scrollView.contentInsetAdjustmentBehavior = .never
     }
 
 }
@@ -891,6 +897,16 @@ private extension UIScrollView {
      */
     var isScrolling: Bool {
         return isDragging && !isDecelerating || isTracking
+    }
+}
+
+private extension PanModalPresentationController {
+    var edgeInset: UIEdgeInsets {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            return (windowScene.windows.first?.safeAreaInsets ?? .zero)
+        }
+
+        return .zero
     }
 }
 #endif
