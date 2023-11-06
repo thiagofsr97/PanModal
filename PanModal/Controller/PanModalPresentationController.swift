@@ -902,8 +902,8 @@ private extension UIScrollView {
 
 private extension PanModalPresentationController {
     var edgeInset: UIEdgeInsets {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            return (windowScene.windows.first?.safeAreaInsets ?? .zero)
+        if let window = UIApplication.shared.windows.first {
+            return window.safeAreaInsets
         }
 
         return .zero
