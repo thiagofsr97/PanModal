@@ -53,6 +53,7 @@ extension UIViewController: PanModalPresenter {
             viewControllerToPresent.popoverPresentationController?.sourceRect = sourceRect
             viewControllerToPresent.popoverPresentationController?.sourceView = sourceView ?? view
             viewControllerToPresent.popoverPresentationController?.delegate = PanModalPresentationDelegate.default
+            viewControllerToPresent.popoverPresentationController?.backgroundColor = viewControllerToPresent.panModalBackgroundColor
         } else {
             viewControllerToPresent.modalPresentationStyle = .custom
             viewControllerToPresent.modalPresentationCapturesStatusBarAppearance = true
