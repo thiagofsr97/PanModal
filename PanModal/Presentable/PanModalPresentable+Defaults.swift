@@ -17,6 +17,13 @@ public extension PanModalPresentable where Self: UIViewController {
         return topLayoutOffset + 21.0
     }
 
+    var bottomLayoutOffset: CGFloat {
+        guard let rootVC = rootViewController
+        else { return 0}
+
+        if #available(iOS 11.0, *) { return rootVC.view.safeAreaInsets.bottom } else { return rootVC.bottomLayoutGuide.length }
+    }
+
     var addBottomSafeAreaForContentSize: Bool {
         return false
     }
@@ -127,6 +134,19 @@ public extension PanModalPresentable where Self: UIViewController {
 
     func panModalDidDismiss() {
 
+    }
+
+    private var rootViewController: UIViewController? {
+        if #available(iOS 13.0, *) {
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = windowScene.windows.first {
+                return window.rootViewController
+            }
+        } else {
+            return UIApplication.shared.keyWindow?.rootViewController
+        }
+
+        return nil
     }
 }
 #endif
