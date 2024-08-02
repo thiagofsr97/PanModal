@@ -77,5 +77,13 @@ extension PanModalPresentationDelegate: UIAdaptivePresentationControllerDelegate
         return .none
     }
 
+    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        guard let presentedPanModal = presentationController.presentedViewController as? PanModalPresentable else {
+            return
+        }
+
+        presentedPanModal.panModalDidDismiss()
+    }
+
 }
 #endif
